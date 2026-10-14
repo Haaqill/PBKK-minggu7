@@ -1,0 +1,318 @@
+@import 'tailwindcss';
+@import "bootstrap/dist/css/bootstrap.min.css";
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+
+@theme {
+    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+        'Segoe UI Symbol', 'Noto Color Emoji';
+}
+
+body {
+    font-family: Arial, sans-serif;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.page-light {
+    background-color: #f8fafc;
+    color: #1e293b;
+}
+
+.page-light main {
+    background-color: #f8fafc;
+}
+
+.page-light .navbar {
+    background-color: #ffffff !important;
+}
+
+.page-light .navbar-brand {
+    color: #1e293b !important;
+}
+
+.page-light .nav-link {
+    color: #334155 !important;
+}
+
+.page-light .nav-link:hover {
+    color: #0d6efd !important;
+    background-color: #f1f5f9;
+}
+
+.page-light .user-select {
+    background-color: #ffffff;
+    color: #334155;
+    border-color: #cbd5e1;
+}
+
+.page-light .user-select:focus {
+    border-color: #0d6efd;
+    box-shadow: none;
+}
+
+.page-dark {
+    background-color: #0f172a !important;
+    color: #e2e8f0;
+}
+
+.page-dark main{
+    background-color: #0f172a;
+    color: #e2e8f0;
+}
+
+.page-dark .navbar {
+    background-color: #111827 !important;
+    border-color: #334155 !important;
+}
+
+.page-dark .navbar-brand {
+    color: #f8fafc !important;
+}
+
+.page-dark .nav-link {
+    color: #cbd5e1 !important;
+}
+
+.page-dark .nav-link:hover {
+    color: #ffffff !important;
+    background-color: #374151;
+}
+
+.page-dark .user-select {
+    background-color: #1e293b;
+    color: #e2e8f0;
+    border-color: #475569;
+}
+
+.page-dark .user-select:focus {
+    background-color: #1e293b;
+    color: #ffffff;
+    border-color: #64748b;
+    box-shadow: none;
+}
+
+.page-dark .user-select option {
+    background-color: #1e293b;
+    color: #e2e8f0;
+}
+
+.nav-link {
+    padding: 8px 14px !important;
+    transition:
+        color 0.3s ease,
+        background-color 0.3s ease;
+}
+
+.navbar {
+    transition:
+        background-color 0.3s ease,
+        border-color 0.3s ease;
+}
+
+.navbar-brand {
+    transition: color 0.3s ease;
+}
+
+.nav-divider {
+    width: 1px;
+    height: 24px;
+    background-color: #cbd5e1;
+    margin: 0 6px;
+}
+
+.nav-user-selector {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.nav-user-label {
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.page-dark footer {
+    background-color: #111827;
+    border-color: #334155 !important;
+    color: #94a3b8;
+}
+
+.page-dark input,
+.page-dark select,
+.page-dark textarea {
+    background-color: #1e293b;
+    color: #e2e8f0;
+    border-color: #475569;
+}
+
+.page-dark input::placeholder,
+.page-dark textarea::placeholder {
+    color: #94a3b8;
+}
+
+.page-dark input:focus,
+.page-dark select:focus,
+.page-dark textarea:focus {
+    background-color: #1e293b;
+    color: #f8fafc;
+    border-color: #64748b;
+}
+
+.page-dark hr {
+    border-color: #475569;
+}
+
+.page-dark .btn-outline-dark {
+    color: #e2e8f0;
+    border-color: #64748b;
+}
+
+.page-dark .btn-outline-dark:hover {
+    background-color: #e2e8f0;
+    color: #0f172a;
+}
+
+.profile-card {
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 20px;
+    padding: 35px;
+    transition: 0.25s ease;
+}
+
+.profile-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 15px 35px rgba(15, 23, 42, 0.08);
+}
+
+.page-dark .profile-card {
+    background: #1e293b;
+    border-color: #334155;
+    color: #e2e8f0;
+}
+
+.page-dark .profile-card h1,
+.page-dark .profile-card h2,
+.page-dark .profile-card h3,
+.page-dark .profile-card h4 {
+    color: #f8fafc;
+}
+
+.page-dark .text-secondary {
+    color: #94a3b8 !important;
+}
+
+.page-dark .info-label {
+    color: #94a3b8;
+}
+
+.page-dark .info-value {
+    color: #f8fafc;
+}
+
+
+.avatar {
+    width: 75px;
+    height: 75px;
+
+    border-radius: 50%;
+
+    background: #0f172a;
+    color: white;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 26px;
+    font-weight: bold;
+}
+
+.info-label {
+    color: #64748b;
+    font-size: 13px;
+}
+
+.info-value {
+    font-weight: 600;
+}
+
+.hero {
+    min-height: 75vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    color: white;
+    background-image:
+        linear-gradient(
+            135deg,
+            rgba(15, 23, 42, 0.95),
+            rgba(30, 41, 59, 0.75),
+            rgba(59, 130, 246, 0.45)
+        ),
+        url('../images/bg.jpg');
+    background-size: cover;
+    background-position: center;
+}
+
+.hero-content {
+    text-align: center;
+    max-width: 850px;
+    padding: 80px 20px;
+}
+
+.hero-title {
+    font-size: clamp(3rem, 7vw, 5.5rem);
+    font-weight: 700;
+    letter-spacing: -4px;
+    line-height: 1.05;
+}
+
+.hero-subtitle {
+    font-size: 1.15rem;
+    line-height: 1.8;
+    max-width: 650px;
+    margin: 0 auto;
+}
+
+.profile-section {
+    padding: 90px 0;
+}
+
+.page-light .profile-section {
+    background: #f8fafc;
+}
+
+.page-dark .profile-section {
+    background: #0f172a;
+}
+
+.mode-button {
+    padding: 8px 14px !important;
+    border-radius: 8px;
+    font-weight: 600;
+
+    transition:
+        color 0.3s ease,
+        background-color 0.3s ease;
+}
+
+.page-light .mode-button {
+    color: #334155 !important;
+}
+
+.page-light .mode-button:hover {
+    color: #0d6efd !important;
+    background-color: #f1f5f9;
+}
+
+.page-dark .mode-button {
+    color: #cbd5e1 !important;
+}
+
+.page-dark .mode-button:hover {
+    color: #ffffff !important;
+    background-color: #374151;
+}
