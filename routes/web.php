@@ -1,7 +1,19 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\Auth\DemoLoginController;
 use App\Http\Controllers\PageController;
+use App\Http\Controllers\ProposalController;
+use App\Http\Controllers\ProjectController;
+use Illuminate\Support\Facades\Route;
+
+if (app()->environment('local')) {
+    Route::post('/_local/demo-login', [
+        DemoLoginController::class,
+        'login',
+    ])->middleware('throttle:6,1')
+      ->name('local.demo-login');
+}
 
 Route::get('/', [PageController::class, 'home']) ->name('home');
 
@@ -21,3 +33,69 @@ Route::get('/hitung-ipk/{ip1}/{ip2}', [PageController::class, 'hitung'])
 Route::fallback(function () {
     return response()->view('404', [], 404);    
 });
+
+Route::get('/dashboard', function () {
+    return redirect()->route(auth()->user()->dashboardRouteName());
+})->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::middleware('auth')->group(function () {
+    Route::middleware('cek.peran:mahasiswa,dosen,asdos')->group(function () {
+        Route::get('/project/recycle-bin', [ProjectController::class, 'recycleBin'])
+            ->name('project.recycle-bin');
+
+        Route::post('/project/{project}/restore', [ProjectController::class, 'restore'])
+            ->withTrashed()
+            ->name('project.restore');
+
+        Route::resource('project', ProjectController::class);
+    });
+
+    Route::middleware('cek.peran:dosen,asdos')
+        ->post('/project/bulk-delete', [ProjectController::class, 'bulkDestroy'])
+        ->name('project.bulk-destroy');
+
+    Route::middleware('cek.peran:mahasiswa')
+        ->prefix('mahasiswa')
+        ->name('mahasiswa.')
+        ->group(function () {
+            Route::get('/proposal', [ProposalController::class, 'index'])
+                ->name('proposal.index');
+
+            Route::get('/proposal/create', [ProposalController::class, 'create'])
+                ->name('proposal.create');
+
+            Route::post('/proposal', [ProposalController::class, 'store'])
+                ->middleware('throttle:proposal-submit')
+                ->name('proposal.store');
+
+            Route::get('/proposal/{proposal}/edit', [ProposalController::class, 'edit'])
+                ->name('proposal.edit');
+
+            Route::put('/proposal/{proposal}', [ProposalController::class, 'update'])
+                ->name('proposal.update');
+
+            Route::delete('/proposal/{proposal}', [ProposalController::class, 'destroy'])
+                ->name('proposal.destroy');
+        });
+
+    Route::middleware('cek.peran:dosen,asdos')
+        ->prefix('admin')
+        ->name('admin.')
+        ->group(function () {
+            Route::get('/', [AdminController::class, 'index'])
+                ->name('index');
+
+            Route::get('/proposal', [ProposalController::class, 'index'])
+                ->name('proposal.index');
+
+            Route::middleware('cek.peran:dosen')->group(function () {
+                Route::get('/nilai', [AdminController::class, 'nilai'])
+                    ->name('nilai');
+            });
+        });
+
+    Route::get('/proposal/{proposal}', [ProposalController::class, 'show'])
+        ->name('proposal.show');
+});
+
+require __DIR__.'/auth.php';

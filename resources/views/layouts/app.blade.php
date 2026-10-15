@@ -36,6 +36,12 @@
                     Project Agent
                 </a>
 
+                @auth
+                    <a href="{{ route('project.index') }}" class="btn {{ ($darkMode ?? false) ? 'btn-outline-light' : 'btn-outline-dark' }}">
+                        Proyek AI
+                    </a>
+                @endauth
+
                 @php
                     $isDark = request()->query('mode') === 'dark';
                 @endphp
@@ -47,46 +53,43 @@
                     }}"
                     class="nav-link mode-button"
                 >
-                    {{ $isDark ? '☀ Light Mode' : '🌙 Dark Mode' }}
+                    {{ $isDark ? 'Light Mode' : 'Dark Mode' }}
                 </a>
 
-                @php
-                    $isDark = request()->query('mode') === 'dark';
-                    $currentUser = request()->query('user', 'Hanif');
-                @endphp
+                @can('input-nilai')
+                    <a class="nav-link" href="{{ route('admin.nilai') }}">
+                        Input Nilai Dosen
+                    </a>
+                @endcan
 
-                <div class="nav-user-selector">
-                    <span class="nav-user-label">
-                        User:
-                    </span>
+                @auth
+                <a class="nav-link" href="{{ route(Auth::user()->dashboardRouteName()) }}">
+                    {{ Auth::user()->name }}
+                    <small>({{ ucfirst(Auth::user()->role) }})</small>
+                </a>
 
-                    <form method="GET" action="{{ route('home') }}">
-                        <input
-                            type="hidden"
-                            name="mode"
-                            value="{{ $isDark ? 'dark' : 'light' }}"
-                        >
+                <form method="POST" action="{{ route('logout') }}">
+                    @csrf
 
-                        <select
-                            name="user"
-                            class="form-select form-select-sm user-select"
-                            onchange="this.form.submit()"
-                        >
-                        <option value="Hanif" {{ $currentUser === 'Hanif' ? 'selected' : '' }}>
-                            Hanif
-                        </option>
-                        
-                        <option value="Aqil" {{ $currentUser === 'Aqil' ? 'selected' : '' }}>
-                            Aqil
-                        </option>
-                        
-                        <option value="Guest" {{ $currentUser === 'Guest' ? 'selected' : '' }}>
-                            Guest
-                        </option>
-                        
-                        </select>
-                    </form>
-                </div>
+                    <button type="submit" class="nav-link navbar-auth-button">
+                        Logout
+                    </button>
+                </form>
+            @else
+                <a
+                    href="{{ route('login') }}"
+                    class="nav-link navbar-auth-button"
+                >
+                    Login
+                </a>
+
+                <a
+                    href="{{ route('register') }}"
+                    class="nav-link navbar-auth-button"
+                >
+                    Register
+                </a>
+            @endauth
 
             </div>
 

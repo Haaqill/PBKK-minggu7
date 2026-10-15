@@ -1,5 +1,7 @@
-@import 'tailwindcss';
 @import "bootstrap/dist/css/bootstrap.min.css";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';
@@ -315,4 +317,34 @@ body {
 .page-dark .mode-button:hover {
     color: #ffffff !important;
     background-color: #374151;
+}
+
+.navbar-auth-button {
+    display: inline-block;
+    padding: 8px 14px !important;
+    border: none;
+    border-radius: 8px;
+    background: transparent;
+    font: inherit;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.page-light .navbar-auth-button {
+    color: #334155 !important;
+}
+
+.page-light .navbar-auth-button:hover {
+    background-color: #f1f5f9;
+    color: #0d6efd !important;
+}
+
+.page-dark .navbar-auth-button {
+    color: #cbd5e1 !important;
+}
+
+.page-dark .navbar-auth-button:hover {
+    background-color: #374151;
+    color: #ffffff !important;
 }
